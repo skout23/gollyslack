@@ -6,27 +6,39 @@ import (
 	"github.com/nlopes/slack"
 )
 
-func main() {
-	api := slack.New("Insert Token Here") // required
+func botpost(pt string, t string, c string, m string) (string, error) {
+	var title string
+	var link string
+
+	title = "Blah Title"
+	link = "https://console.aws.amazon.com/inspector/home?region=us-east-1#/run"
+
+	api := slack.New("xoxb-74956207364-J9fqHu2xlOEJ2q6LgPWH5t7b") // required
 	params := slack.PostMessageParameters{}
 	attachment := slack.Attachment{
-		Pretext: "Results from Assessment Run",
-		Text:    "Summary Text of AR",
-		// Uncomment the following part to send a field too
-		/*
-			Fields: []slack.AttachmentField{
-				slack.AttachmentField{
-					Title: "a",
-					Value: "no",
-				},
-			},
-		*/
+		Color:     "good",
+		Title:     title,
+		TitleLink: link,
+		//	Pretext:   pt,
+		//	Text:      t,
 	}
+	params.AsUser = true
+	params.Username = "Penny Gadget"
 	params.Attachments = []slack.Attachment{attachment}
-	channelID, timestamp, err := api.PostMessage("CHANNELID", "wakka wakka", params)
+	channelID, timestamp, err := api.PostMessage(c, m, params)
 	if err != nil {
-		fmt.Printf("%s\n", err)
-		return
+		return "failed to send message", err
 	}
-	fmt.Printf("Message successfully sent to channel %s at %s", channelID, timestamp)
+	return fmt.Sprintf("Message successfully sent to channel %s at %s", channelID, timestamp), nil
+}
+
+func main() {
+	// test-out : C0PJW9L14
+	// site-reliability-bots : C1X6UUFCY
+	channel := "C0PJW9L14"
+	_, err := botpost("Pretext to Attachment", "Summary Attached", channel, "")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 }
