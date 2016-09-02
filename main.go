@@ -13,7 +13,7 @@ func botpost(pt string, t string, c string, m string) (string, error) {
 	title = "Blah Title"
 	link = "https://console.aws.amazon.com/inspector/home?region=us-east-1#/run"
 
-	api := slack.New("xoxb-74956207364-J9fqHu2xlOEJ2q6LgPWH5t7b") // required
+	api := slack.New("blah") // required
 	params := slack.PostMessageParameters{}
 	attachment := slack.Attachment{
 		Color:     "good",
